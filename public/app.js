@@ -1,25 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
+    populateYearDropdown();
     fetchStandings();
 });
+
+function populateYearDropdown() {
+    const select = document.getElementById('year-select');
+    const currentYear = new Date().getFullYear();
+
+    for (let y = currentYear; y >= 1876; y--) {
+        const option = document.createElement('option');
+        option.value = y;
+        option.textContent = y;
+        select.appendChild(option);
+    }
+
+    select.addEventListener('change', fetchStandings);
+}
 
 async function fetchStandings() {
     const loadingElement = document.getElementById('loading');
     const containerElement = document.getElementById('standings-container');
+    const selectedYear = document.getElementById('year-select').value;
+
+    loadingElement.classList.remove('hidden');
+    containerElement.classList.add('hidden');
 
     try {
-        const response = await fetch('/api/standings');
+        const response = await fetch(`/api/standings?year=${selectedYear}`);
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
 
         const data = await response.json();
-        console.log("MLB API Data:", data);
-
         const records = data.records || data;
 
         if (!records || records.length === 0) {
-            loadingElement.textContent = 'No data found. Check your API parameters or console.';
+            loadingElement.textContent = `No data found for the ${selectedYear} season.`;
             loadingElement.classList.remove('hidden');
             return;
         }
@@ -38,12 +55,12 @@ async function fetchStandings() {
 function renderStandings(records, container) {
     container.innerHTML = '';
 
-    records.forEach(division => {
+    records.forEach(group => {
         const divisionCard = document.createElement('div');
         divisionCard.className = 'division-card';
 
-        let shortName = division.division.name;
-        shortName = shortName.replace('American League', 'AL').replace('National League', 'NL');
+        let fullName = group.division ? group.division.name : group.league.name;
+        let shortName = fullName.replace('American League', 'AL').replace('National League', 'NL');
 
         const divisionHeader = document.createElement('div');
         divisionHeader.className = 'division-name';
@@ -67,7 +84,7 @@ function renderStandings(records, container) {
 
         const tbody = document.createElement('tbody');
 
-        division.teamRecords.forEach(teamRecord => {
+        group.teamRecords.forEach(teamRecord => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="team-name">${teamRecord.team.name}</td>
