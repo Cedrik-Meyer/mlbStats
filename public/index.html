@@ -12,7 +12,7 @@
     <h1>MLB Standings</h1>
 </header>
 
-<div class="controls">
+<div class="controls" id="main-controls">
     <label for="year-select">Select Season: </label>
     <select id="year-select"></select>
 </div>
@@ -21,6 +21,25 @@
     <div id="loading" class="loading-state">Loading latest standings...</div>
     <div id="standings-container" class="standings-grid hidden"></div>
 </main>
+
+<div id="team-modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="close-modal-btn" class="close-button">&times;</button>
+        <h2 id="team-title" class="team-title">Team Name</h2>
+
+        <div class="topbar">
+            <button class="tab-btn active" data-tab="schedule">Schedule</button>
+            <button class="tab-btn" data-tab="stats-hitting">Player Stats (Hitting)</button>
+            <button class="tab-btn" data-tab="stats-pitching">Player Stats (Pitching)</button>
+        </div>
+
+        <div id="team-loading" class="loading-state hidden">Loading team data...</div>
+
+        <div id="schedule-content" class="tab-content"></div>
+        <div id="stats-hitting-content" class="tab-content hidden"></div>
+        <div id="stats-pitching-content" class="tab-content hidden"></div>
+    </div>
+</div>
 
 </body>
 </html>

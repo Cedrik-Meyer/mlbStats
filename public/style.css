@@ -101,3 +101,134 @@ h1 {
     outline: none;
     border-color: #002d72;
 }
+
+.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.clickable-row:hover {
+    background-color: #e6f0fa;
+}
+
+.team-title {
+    color: #002d72;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #002d72;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+.topbar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: #555;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+}
+
+.tab-btn.active {
+    color: #002d72;
+    border-bottom: 3px solid #002d72;
+}
+
+.tab-content {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.basic-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.basic-table th, .basic-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.basic-table th {
+    background-color: #f9f9f9;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Dunkelt den Hintergrund ab */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: #f4f7f6;
+    width: 90%;
+    max-width: 800px;
+    height: 85vh; /* Verhindert, dass es zu groß wird */
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-button:hover {
+    color: #d00;
+}
+
+.postseason-row td {
+    background-color: #002d72 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    text-align: center !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1rem !important;
+}
