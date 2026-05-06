@@ -99,7 +99,9 @@ export function renderHittingStats(roster, container) {
         container.innerHTML = '<p>No stats data available.</p>';
         return;
     }
-    let html = '<table class="basic-table"><thead><tr><th>Player</th><th>Pos</th><th>AVG</th><th>HR</th><th>RBI</th></tr></thead><tbody>';
+
+    let html = '<table class="basic-table"><thead><tr><th>Player</th><th>Pos</th><th>G</th><th>PA</th><th>HR</th><th>RBI</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody>';
+
     roster.forEach(player => {
         const pos = player.position.abbreviation;
         if (pos === 'P') return;
@@ -110,8 +112,29 @@ export function renderHittingStats(roster, container) {
             if (hitGroup && hitGroup.splits.length > 0) statsObj = hitGroup.splits[0].stat;
         }
 
-        html += `<tr><td>${player.person.fullName}</td><td>${pos}</td><td>${statsObj?.avg || '-'}</td><td>${statsObj?.homeRuns || '-'}</td><td>${statsObj?.rbi || '-'}</td></tr>`;
+        const g = statsObj?.gamesPlayed || '0';
+        const pa = statsObj?.plateAppearances || '0';
+        const hr = statsObj?.homeRuns || '0';
+        const rbi = statsObj?.rbi || '0';
+        const avg = statsObj?.avg || '-';
+        const obp = statsObj?.obp || '-';
+        const slg = statsObj?.slg || '-';
+        const ops = statsObj?.ops || '-';
+
+        html += `<tr>
+            <td>${player.person.fullName}</td>
+            <td>${pos}</td>
+            <td>${g}</td>
+            <td>${pa}</td>
+            <td>${hr}</td>
+            <td>${rbi}</td>
+            <td>${avg}</td>
+            <td>${obp}</td>
+            <td>${slg}</td>
+            <td>${ops}</td>
+        </tr>`;
     });
+
     html += '</tbody></table>';
     container.innerHTML = html;
 }
@@ -121,7 +144,9 @@ export function renderPitchingStats(roster, container) {
         container.innerHTML = '<p>No stats data available.</p>';
         return;
     }
-    let html = '<table class="basic-table"><thead><tr><th>Player</th><th>W</th><th>L</th><th>ERA</th><th>SO</th></tr></thead><tbody>';
+
+    let html = '<table class="basic-table"><thead><tr><th>Player</th><th>G</th><th>GS</th><th>IP</th><th>ERA</th><th>HR/9</th><th>SO/9</th><th>BB/9</th></tr></thead><tbody>';
+
     roster.forEach(player => {
         const pos = player.position.abbreviation;
         if (pos !== 'P' && pos !== 'TWP') return;
@@ -132,8 +157,26 @@ export function renderPitchingStats(roster, container) {
             if (pitchGroup && pitchGroup.splits.length > 0) statsObj = pitchGroup.splits[0].stat;
         }
 
-        html += `<tr><td>${player.person.fullName}</td><td>${statsObj?.wins || '0'}</td><td>${statsObj?.losses || '0'}</td><td>${statsObj?.era || '-'}</td><td>${statsObj?.strikeOuts || '0'}</td></tr>`;
+        const g = statsObj?.gamesPlayed || '0';
+        const gs = statsObj?.gamesStarted || '0';
+        const ip = statsObj?.inningsPitched || '0.0';
+        const era = statsObj?.era || '-';
+        const hr9 = statsObj?.homeRunsPer9 || '-';
+        const so9 = statsObj?.strikeoutsPer9Inn || '-';
+        const bb9 = statsObj?.walksPer9Inn || '-';
+
+        html += `<tr>
+            <td>${player.person.fullName}</td>
+            <td>${g}</td>
+            <td>${gs}</td>
+            <td>${ip}</td>
+            <td>${era}</td>
+            <td>${hr9}</td>
+            <td>${so9}</td>
+            <td>${bb9}</td>
+        </tr>`;
     });
+
     html += '</tbody></table>';
     container.innerHTML = html;
 }
